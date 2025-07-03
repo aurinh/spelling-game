@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <title>Permainan Ejaan Bergambar</title>
+  <style>
+    body { font-family: Arial; padding: 2rem; background: #f0f8ff; text-align: center; }
+    .card { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 0 10px #ccc; display: inline-block; }
+    img { max-width: 200px; height: auto; border-radius: 1rem; margin-bottom: 1rem; }
+    input { padding: 0.5rem; font-size: 1.2rem; width: 60%; }
+    button { padding: 0.5rem 1rem; font-size: 1rem; margin-top: 1rem; }
+    #feedback { margin-top: 1rem; font-weight: bold; }
+    #score { margin-top: 2rem; font-size: 1.2rem; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Apakah ejaan perkataan berdasarkan gambar ini?</h2>
+  <img id="imageHint" src="" alt="Gambar petunjuk">
+  <br>
+  <input type="text" id="answer" placeholder="Taip jawapan anda">
+  <br>
+  <button onclick="checkAnswer()">Semak</button>
+  <div id="feedback"></div>
+  <div id="score">Skor: 0</div>
+</div>
+
+<script>
+  const words = [
+    { word: "hadiah", img: "https://upload.wikimedia.org/wikipedia/commons/0/04/Gift_box_icon.svg" },
+    { word: "taman", img: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Kyoto_Gyoen_Garden.jpg" },
+    { word: "kelas", img: "https://upload.wikimedia.org/wikipedia/commons/2/20/Classroom_Cartoon.svg" },
+    { word: "tolong", img: "https://upload.wikimedia.org/wikipedia/commons/d/d2/Help_icon.svg" },
+    { word: "bersih", img: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Cleaning_icon.svg" },
+    { word: "bermain", img: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Children_playing.svg" },
+    { word: "hutan", img: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Forest_borneo.jpg" },
+    { word: "bebas", img: "https://upload.wikimedia.org/wikipedia/commons/7/79/Freedom.svg" },
+    { word: "pulang", img: "https://upload.wikimedia.org/wikipedia/commons/8/84/Home_icon.svg" },
+    { word: "kampung", img: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Malay_Village_House.jpg" }
+  ];
+
+  let currentIndex = 0;
+  let score = 0;
+
+  function showWord() {
+    document.getElementById("imageHint").src = words[currentIndex].img;
+    document.getElementById("answer").value = "";
+    document.getElementById("feedback").textContent = "";
+  }
+
+  function checkAnswer() {
+    const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+    const correct = words[currentIndex].word;
+
+    if (userAnswer === correct) {
+      score++;
+      document.getElementById("feedback").textContent = "✅ Betul!";
+    } else {
+      document.getElementById("feedback").textContent = `❌ Salah! Ejaan yang betul ialah "${correct}"`;
+    }
+
+    document.getElementById("score").textContent = `Skor: ${score}`;
+    currentIndex = (currentIndex + 1) % words.length;
+    setTimeout(showWord, 1500);
+  }
+
+  // Mula permainan
+  showWord();
+</script>
+
+</body>
+</html>
